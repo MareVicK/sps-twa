@@ -12,6 +12,16 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return $this->render('EshopBundle:Default:index.html.twig');
+        $entity_maneger = $this->getDoctrine()->getManager();
+        $product_repository = $entity_maneger
+                ->getRepository("EshopBundle:Product");
+        $products = $product_repository->findAll();
+        
+        $password = password_hash("admin", PASSWORD_BCRYPT, array("cost" => 12));
+        
+        return $this->render('@Eshop\Default\index.html.twig', array(
+            "products" => $products,
+            "password" => $password       
+        ));
     }
 }

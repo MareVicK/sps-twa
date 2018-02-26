@@ -1,9 +1,17 @@
 # To get started with security, check out the documentation:
 # https://symfony.com/doc/current/security.html
 security:
+    encoders:
+        EshopBundle\Entity\User:
+            algorithm: bcrypt
+            cost: 12
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
+        eshop_provider:
+            entity:
+                class: EshopBundle:User
+                property: email
         in_memory:
             memory: ~
 
@@ -14,6 +22,12 @@ security:
             security: false
 
         main:
+            provider: eshop_provider
+            logout:
+                path: /logout
+            form_login:
+                login_path: /login
+                check_path: /login
             anonymous: ~
             # activate different ways to authenticate
 

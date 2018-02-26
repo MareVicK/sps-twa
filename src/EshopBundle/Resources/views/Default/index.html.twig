@@ -1,1 +1,33 @@
-Hello World!
+{% extends "base.html.twig" %}
+
+{% block title %}Produkty{% endblock %}
+
+{% block body %}
+    {{ password }}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Název</th>
+                <th>Popis</th>
+                <th>Kategorie</th>
+                <th>Cena</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>
+                        {% if product.category is not null %}
+                            {{ product.category.name }}
+                        {% else %}
+                            Nemá kategorii
+                        {% endif %}
+                    </td>
+                    <td>{{ product.price }} Kč</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

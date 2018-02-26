@@ -3,6 +3,7 @@
 namespace EshopBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class User
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @package EshopBundle\Entity
  * @ORM\Entity(repositoryClass="EshopBundle\Repository\UserRepository")
  */
-class User
+class User implements \Serializable, UserInterface
 {
     /**
      * @ORM\Id()
@@ -222,4 +223,43 @@ class User
         $this->order = $order;
         return $this;
     }
+
+    public function eraseCredentials() {
+        
+    }
+
+    public function getRoles() {
+        return array($this->role);
+    }
+
+    public function getSalt() {
+        return null;
+    }
+
+    public function getUsername() {
+        return $this->email;
+    }
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->email,
+            $this->password,
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->email,
+            $this->password,
+            // see section on salt below
+            // $this->salt
+        ) = unserialize($serialized);
+    }
+
 }
