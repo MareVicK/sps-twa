@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Registrace{% endblock %}
+
+{% block body %}
+    {% if error is defined %}
+        <div>{{ error }}</div>
+    {% endif %}
+
+   <div class="container">
+    {{ form_start(form)}}
+    {{ form_widget(form) }}
+    {{ fomr_end(form) }}
+   </div>
+    
+{% endblock %}
